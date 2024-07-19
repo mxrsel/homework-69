@@ -6,7 +6,9 @@ export interface Show{
     id: string;
     name: string;
     description: string;
-    image: string;
+    image: {
+        medium: string;
+    };
 }
 
 export interface ShowState {
@@ -60,6 +62,10 @@ const ShowSlice = createSlice({
             .addCase(fetchDetails.pending, (state) => {
                 state.loading = true;
                 state.error = null;
+            })
+            .addCase(fetchDetails.fulfilled, (state, action: PayloadAction<Show>) => {
+                state.loading = false;
+                state.Details = action.payload;
             })
             .addCase(fetchDetails.rejected, (state, action) => {
                 state.loading = false;
